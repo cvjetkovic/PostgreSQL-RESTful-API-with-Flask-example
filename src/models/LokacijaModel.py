@@ -1,6 +1,7 @@
 from . import db
 from marshmallow import fields, Schema
 
+
 class LokacijaModel(db.Model): 
 
     # table & schema name  
@@ -14,7 +15,8 @@ class LokacijaModel(db.Model):
     # class constructor
     def __init__(self, data):
         self.naziv = data.get('naziv')
-        self.adresa = data.get('adresa')        
+        self.adresa = data.get('adresa')   
+        
 
     def __repr__(self):
         return f"<Lokacija {self.naziv}>"
@@ -23,6 +25,7 @@ class LokacijaModel(db.Model):
     def save(self):
         db.session.add(self)
         db.session.commit()
+     
 
     def update(self, data):
         for key, item in data.items():
@@ -33,12 +36,23 @@ class LokacijaModel(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+
     @staticmethod
-    def get_all_lokacije():
-        return LokacijaModel.query.all()
+    def get_all_lokacije_paginate(limit, offset):
+        return LokacijaModel.query.offset(offset).limit(limit)
+  
+
+    @staticmethod
+    def get_one_lokacija(id):
+        return LokacijaModel.query.get(id)
 
     def __repr__(self):
         return '<id {}>' .format(self.id)
+
+    # @staticmethod
+    # def get_all_lokacije()
+    #     return LokacijaModel.query.all();    
+
 
 class LokacijeSchema(Schema):
 
