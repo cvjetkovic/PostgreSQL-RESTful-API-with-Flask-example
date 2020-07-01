@@ -55,7 +55,6 @@ class LokacijaModel(db.Model):
 
 
 class LokacijeSchema(Schema):
-
     id = fields.Int(dump_only=True)
     naziv = fields.Str(required=True)
     adresa = fields.Str(required=True)
